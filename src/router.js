@@ -1,23 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from './views/Home.vue'
+import signInComponent from './pages/signIn'
+import signUpComponent from './pages/signUp'
+import homeComponent from './pages/home'
+import allReceiverComponent from './pages/home/children/allReceiver'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: Home
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    }
+    {path:'/',redirect:'/signIn'},
+    {path:'/signIn',component:signInComponent},
+    {path:'/signUp',component:signUpComponent},
+  //   {path:'/home',
+  //   component:homeComponent,
+  //   redirect:'/home/allReceiver',
+  //   children:[
+  //     {
+  //       path:'allReceiver',component: allReceiverComponent 
+  //     }
+  //   ]
+  // },
+  {
+    path: '/home',
+    component: homeComponent,
+    redirect: '/home/allReceiver',
+    children: [
+      { path: 'allReceiver', component: allReceiverComponent }
+    ]
+  },
   ]
 })
